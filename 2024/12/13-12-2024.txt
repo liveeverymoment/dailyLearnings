@@ -1,0 +1,71 @@
+----------------------------------------------------------------------
+Python decorator:
+Functions are first class objects which can be returned from any function, passed as argument to any function, and give reference of the function.
+
+These above 3 things are used in decorator.
+
+3.
+def callable_func():
+    return "inside callable func"
+
+a = callable_func
+print(a)
+
+2.
+def external_func(func):
+    print("befoer")
+    returned_value = func()
+    print("after")
+
+external_func(callable_func)
+
+1.
+def parent():
+    def child():
+        print("child")
+    
+    return child
+
+child_function = parent()
+
+
+This will be used for decorator:
+Decorator takes wrapped function, does before and after operations, and returns the result.
+
+Decorators in Python require that the function being decorated is wrapped inside another function to delay execution until the decorated function is called.
+
+A decorator should return a new function that wraps the behavior of the original function.
+
+def hello_decorator(func):
+    def inner1(*args, **kwargs):  # Wrapper function
+        print("before Execution")
+        
+        # Call the original function
+        returned_value = func(*args, **kwargs)
+        
+        print("after Execution")
+        
+        # Return the result of the original function
+        return returned_value
+        
+    return inner1  # Return the wrapper function
+
+
+# Adding decorator to the function
+@hello_decorator
+def sum_two_numbers(a, b):
+    print("Inside the function")
+    return a + b
+
+a, b = 1, 2
+
+# Getting the value through return of the function
+print("Sum =", sum_two_numbers(a, b))
+
+before Execution
+Inside the function
+after Execution
+Sum = 3
+
+
+If chained then it will process data from bottom to top : decorator list.
